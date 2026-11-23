@@ -23,6 +23,7 @@ afterEach(() => {
 
 describe('account and session storage', () => {
   it('stores and finds users by case-insensitive email', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { createUser, findUserByEmail, closeAccountDatabase } = require('../../src/data/accounts') as typeof import('../../src/data/accounts');
     closeDatabase = closeAccountDatabase;
     const user = { id: 'u1', email: 'Guest@example.com', passwordHash: 'hash', passwordSalt: 'salt' };
@@ -32,6 +33,7 @@ describe('account and session storage', () => {
 
   it('stores, finds, and deletes sessions', () => {
     const { createUser, createSession, findSessionByTokenHash, deleteSession, closeAccountDatabase } =
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       require('../../src/data/accounts') as typeof import('../../src/data/accounts');
     closeDatabase = closeAccountDatabase;
     createUser({ id: 'u1', email: 'guest@example.com', passwordHash: 'hash', passwordSalt: 'salt' });
