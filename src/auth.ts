@@ -75,18 +75,20 @@ export async function signup(req: Request, res: Response): Promise<void> {
   if (!input) return;
   const salt = randomBytes(16).toString('hex');
   const passwordHash = await hashPassword(input.password, salt);
+  let user;
   try {
-    const user = createUser({
+    user = createUser({
       id: randomUUID(),
       email: input.email,
       passwordHash,
       passwordSalt: salt,
     });
-    await issueSession(user.id, res);
-    res.status(201).json({ user: { id: user.id, email: user.email } });
   } catch {
     res.status(409).json({ error: 'An account with that email already exists.' });
+    return;
   }
+  await issueSession(user.id, res);
+  res.status(201).json({ user: { id: user.id, email: user.email } });
 }
 
 export async function login(req: Request, res: Response): Promise<void> {
